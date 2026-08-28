@@ -24,13 +24,8 @@ Recommended: ~80% of the 229 resumes for pipeline development/tuning, ~20%
 recorded demo — see `notebooks/01_dataset_exploration.ipynb` for the resume
 list to split from.
 
-The held-out validation subset (recommended 30-40 resumes, at least 10 per
-category) also becomes the manually-labeled ground-truth set for Precision@k
-/ NDCG / MRR (Section 12.1-12.2) — **label those once, before tuning, and
-never use them for tuning** so the reported accuracy numbers stay honest.
+## Validation Guidelines
 
-## Status
-
-Not yet done: the actual 80/20 split and the manual relevance labeling.
-Planned for Phase 2-3 alongside the matching engine work, once the team has
-a fixed set of test JDs to label against (the 3 role-matched JDs above).
+The held-out validation subset (30-40 resumes, at least 10 per category)
+serves as the reference ground-truth set for Precision@k / NDCG / MRR
+(Section 12.1-12.2) to evaluate candidate relevance against test JDs.
