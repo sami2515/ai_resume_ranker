@@ -86,24 +86,14 @@ export default function JobsView({ onSelectJob, onNavigateUpload }) {
         created = await createJob({ title: title.trim(), text: text.trim() });
       }
 
-      toast(`Created job "${created.title}". Running AI ranking...`, "success");
+      toast(`Job "${created.title}" created successfully!`, "success");
       setShowModal(false);
       setTitle("");
       setText("");
       setFile(null);
       setTouchedTitle(false);
       setTouchedText(false);
-
-      // Automatically run ranking for newly created job
-      try {
-        await rankJob(created.id);
-        toast("Candidates ranked successfully!", "success");
-      } catch (err) {
-        // ranking error (e.g. no candidates yet) is non-fatal
-      }
-
       fetchJobs();
-      onSelectJob(created.id);
     } catch (err) {
       toast(err.message, "error");
     } finally {
