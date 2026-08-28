@@ -77,6 +77,11 @@ def create_core_app(config_object: type = Config) -> Flask:
                 if "predicted_category" not in existing_columns:
                     db.session.execute(text("ALTER TABLE candidate ADD COLUMN predicted_category VARCHAR(64)"))
                     db.session.commit()
+            if "job_description" in inspector.get_table_names():
+                existing_job_cols = {c["name"] for c in inspector.get_columns("job_description")}
+                if "status" not in existing_job_cols:
+                    db.session.execute(text("ALTER TABLE job_description ADD COLUMN status VARCHAR(32) DEFAULT 'active'"))
+                    db.session.commit()
 
     return app
 
