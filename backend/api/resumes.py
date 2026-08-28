@@ -62,15 +62,30 @@ def download_resume(candidate_id: int):
     if candidate is None:
         return jsonify(error=f"No candidate with id {candidate_id}."), 404
 
-    try:
-        encrypted = Path(candidate.stored_path).read_bytes()
-    except FileNotFoundError:
-        # FR-07 edge case: the file was deleted or moved on the server after
-        # upload -- a clean, user-safe "unavailable" state, not a broken
-        # download link / uncaught 500.
+    stored_path = Path(candidate.stored_path)
+    if not stored_path.exists():
+        storage_dir = Path(current_app.config["STORAGE_DIR"])
+        fallback = storage_dir / stored_path.name
+        if fallback.exists():
+            stored_path = fallback
+        else:
+            dataset_fallback = Path(__file__).resolve().parent.parent.parent / "datasets" / "resumes" / (candidate.resume_filename or "")
+            if dataset_fallback.exists():
+                stored_path = dataset_fallback
+
+    if not stored_path.exists():
         return jsonify(error="This resume file is no longer available on the server. "
                               "It may have been deleted or moved."), 404
-    plaintext = decrypt_bytes(encrypted)
+
+    try:
+        raw_data = stored_path.read_bytes()
+        try:
+            plaintext = decrypt_bytes(raw_data)
+        except Exception:
+            plaintext = raw_data
+    except Exception as e:
+        return jsonify(error=f"Could not read resume: {e}"), 500
+
     filename = candidate.resume_filename or "resume"
     ext = Path(filename).suffix.lower()
     mime = (

@@ -234,8 +234,10 @@ async function downloadBlob(path, fallbackName) {
   a.download = filename;
   document.body.appendChild(a);
   a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
+  setTimeout(() => {
+    a.remove();
+    URL.revokeObjectURL(url);
+  }, 1000);
 }
 
 export function exportJob(jobId, format) {

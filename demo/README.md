@@ -15,8 +15,5 @@ This folder is dedicated to the mandatory video demonstration (`demo_video.mp4`)
 
 ---
 
-> **Note on Video File Submission:**
-> - Place `demo_video.mp4` directly inside this `demo/` folder prior to final submission.
-> - If your video file is larger than GitHub's 100MB direct upload limit, upload the `.mp4` video to Google Drive (with public view permissions) and paste the link below:
-> 
-> **Google Drive / Video Stream Link:** `[PASTE_PUBLIC_DRIVE_LINK_HERE]`
+> **Video File Included:**
+> - `AI_resumeRanker.mp4` is located directly in this `demo/` directory demonstrating all recruitment workflows, AI parsing, matching, explainability, feedback, and analytics.

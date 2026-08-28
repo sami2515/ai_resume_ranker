@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import ReactDOM from "react-dom";
 import {
   Briefcase,
   Plus,
@@ -363,130 +364,135 @@ export default function JobsView({ onSelectJob, onNavigateUpload }) {
       )}
 
       {/* Create Job Modal */}
-      {showModal && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-surface-2 border border-line rounded-2xl w-full max-w-lg p-6 shadow-2xl space-y-5 animate-in fade-in zoom-in-95 duration-150">
-            <div className="flex items-center justify-between">
-              <h3 className="text-lg font-display font-bold text-ink flex items-center gap-2">
-                <Briefcase size={18} className="text-accent" /> Post New Job Description
-              </h3>
-              <button
-                onClick={() => setShowModal(false)}
-                className="text-ink-muted hover:text-ink text-sm p-1 rounded-lg hover:bg-surface-3"
-              >
-                ✕
-              </button>
-            </div>
-
-            <form onSubmit={handleCreateJob} className="space-y-4">
-              <div>
-                <label className="text-xs font-semibold text-ink-muted block mb-1.5">Job Title *</label>
-                <input
-                  type="text"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  onBlur={() => setTouchedTitle(true)}
-                  placeholder="e.g. Senior Business Analyst / Full Stack Developer"
-                  className={`w-full px-3.5 py-2.5 rounded-xl bg-surface-1 border text-ink placeholder-ink-faint focus:outline-none text-sm transition-colors ${
-                    touchedTitle && !title.trim()
-                      ? "border-bad focus:border-bad"
-                      : "border-line focus:border-accent"
-                  }`}
-                />
-                {touchedTitle && !title.trim() && (
-                  <p className="text-bad text-xs mt-1">Job title is required</p>
-                )}
-              </div>
-
-              {/* Mode Switcher */}
-              <div className="flex rounded-xl bg-surface-1 border border-line p-1 gap-1">
+      {showModal &&
+        ReactDOM.createPortal(
+          <div
+            className="fixed inset-0 z-[200] flex items-center justify-center p-4"
+            style={{ background: "rgba(9,13,22,0.92)", backdropFilter: "blur(16px)" }}
+          >
+            <div className="bg-surface-2 border border-line rounded-2xl w-full max-w-lg p-6 shadow-2xl space-y-5 animate-in fade-in zoom-in-95 duration-150">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-display font-bold text-ink flex items-center gap-2">
+                  <Briefcase size={18} className="text-accent" /> Post New Job Description
+                </h3>
                 <button
-                  type="button"
-                  onClick={() => setMode("text")}
-                  className={`flex-1 py-1.5 text-xs font-medium rounded-lg flex items-center justify-center gap-1.5 transition-colors ${
-                    mode === "text" ? "bg-accent text-white shadow-glow" : "text-ink-muted hover:text-ink"
-                  }`}
+                  onClick={() => setShowModal(false)}
+                  className="text-ink-muted hover:text-ink text-sm p-1 rounded-lg hover:bg-surface-3"
                 >
-                  <FileText size={13} /> Paste Text
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setMode("file")}
-                  className={`flex-1 py-1.5 text-xs font-medium rounded-lg flex items-center justify-center gap-1.5 transition-colors ${
-                    mode === "file" ? "bg-accent text-white shadow-glow" : "text-ink-muted hover:text-ink"
-                  }`}
-                >
-                  <Upload size={13} /> Upload File (.docx / .pdf)
+                  ✕
                 </button>
               </div>
 
-              {mode === "text" ? (
+              <form onSubmit={handleCreateJob} className="space-y-4">
                 <div>
-                  <label className="text-xs font-semibold text-ink-muted block mb-1.5">
-                    Job Description & Responsibilities *
-                  </label>
-                  <textarea
-                    rows={6}
-                    value={text}
-                    onChange={(e) => setText(e.target.value)}
-                    onBlur={() => setTouchedText(true)}
-                    placeholder="Paste the full job requirements, required skills, and qualifications here..."
-                    className={`w-full px-3.5 py-2.5 rounded-xl bg-surface-1 border text-ink placeholder-ink-faint focus:outline-none text-sm resize-y transition-colors ${
-                      touchedText && !text.trim()
+                  <label className="text-xs font-semibold text-ink-muted block mb-1.5">Job Title *</label>
+                  <input
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    onBlur={() => setTouchedTitle(true)}
+                    placeholder="e.g. Senior Business Analyst / Full Stack Developer"
+                    className={`w-full px-3.5 py-2.5 rounded-xl bg-surface-1 border text-ink placeholder-ink-faint focus:outline-none text-sm transition-colors ${
+                      touchedTitle && !title.trim()
                         ? "border-bad focus:border-bad"
                         : "border-line focus:border-accent"
                     }`}
                   />
-                  {touchedText && !text.trim() && (
-                    <p className="text-bad text-xs mt-1">Job description text is required</p>
-                  )}
-                  {text.trim() && text.trim().split(/\s+/).length < 10 && (
-                    <p className="text-warn text-xs mt-1">⚠ Too short — add more details for accurate AI matching</p>
+                  {touchedTitle && !title.trim() && (
+                    <p className="text-bad text-xs mt-1">Job title is required</p>
                   )}
                 </div>
-              ) : (
-                <div>
-                  <label className="text-xs font-semibold text-ink-muted block mb-1.5">
-                    Upload JD Document (.docx / .pdf) *
-                  </label>
-                  <div
-                    onClick={() => fileInputRef.current?.click()}
-                    className="border-2 border-dashed border-line hover:border-accent rounded-xl p-6 text-center cursor-pointer bg-surface-1 transition-colors"
-                  >
-                    <Upload size={20} className="text-accent mx-auto mb-2" />
-                    {file ? (
-                      <p className="text-ink text-sm font-medium flex items-center justify-center gap-1.5">
-                        <CheckCircle2 size={14} className="text-good" /> {file.name}
-                      </p>
-                    ) : (
-                      <>
-                        <p className="text-xs text-ink font-medium">Click to select JD file</p>
-                        <p className="text-[11px] text-ink-muted mt-0.5">Supports .docx and .pdf up to 10MB</p>
-                      </>
-                    )}
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      accept=".docx,.pdf"
-                      className="hidden"
-                      onChange={(e) => e.target.files?.[0] && setFile(e.target.files[0])}
-                    />
-                  </div>
-                </div>
-              )}
 
-              <div className="flex justify-end gap-2 pt-2">
-                <Button type="button" variant="secondary" onClick={() => { setShowModal(false); setTouchedTitle(false); setTouchedText(false); }}>
-                  Cancel
-                </Button>
-                <Button type="submit" variant="primary" loading={creating}>
-                  Create & Run Ranking
-                </Button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
+                {/* Mode Switcher */}
+                <div className="flex rounded-xl bg-surface-1 border border-line p-1 gap-1">
+                  <button
+                    type="button"
+                    onClick={() => setMode("text")}
+                    className={`flex-1 py-1.5 text-xs font-medium rounded-lg flex items-center justify-center gap-1.5 transition-colors ${
+                      mode === "text" ? "bg-accent text-white shadow-glow" : "text-ink-muted hover:text-ink"
+                    }`}
+                  >
+                    <FileText size={13} /> Paste Text
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setMode("file")}
+                    className={`flex-1 py-1.5 text-xs font-medium rounded-lg flex items-center justify-center gap-1.5 transition-colors ${
+                      mode === "file" ? "bg-accent text-white shadow-glow" : "text-ink-muted hover:text-ink"
+                    }`}
+                  >
+                    <Upload size={13} /> Upload File (.docx / .pdf)
+                  </button>
+                </div>
+
+                {mode === "text" ? (
+                  <div>
+                    <label className="text-xs font-semibold text-ink-muted block mb-1.5">
+                      Job Description & Responsibilities *
+                    </label>
+                    <textarea
+                      rows={6}
+                      value={text}
+                      onChange={(e) => setText(e.target.value)}
+                      onBlur={() => setTouchedText(true)}
+                      placeholder="Paste the full job requirements, required skills, and qualifications here..."
+                      className={`w-full px-3.5 py-2.5 rounded-xl bg-surface-1 border text-ink placeholder-ink-faint focus:outline-none text-sm resize-y transition-colors ${
+                        touchedText && !text.trim()
+                          ? "border-bad focus:border-bad"
+                          : "border-line focus:border-accent"
+                      }`}
+                    />
+                    {touchedText && !text.trim() && (
+                      <p className="text-bad text-xs mt-1">Job description text is required</p>
+                    )}
+                    {text.trim() && text.trim().split(/\s+/).length < 10 && (
+                      <p className="text-warn text-xs mt-1">⚠ Too short — add more details for accurate AI matching</p>
+                    )}
+                  </div>
+                ) : (
+                  <div>
+                    <label className="text-xs font-semibold text-ink-muted block mb-1.5">
+                      Select JD Document (.docx or .pdf) *
+                    </label>
+                    <div
+                      onClick={() => fileInputRef.current?.click()}
+                      className="border-2 border-dashed border-line hover:border-accent rounded-xl p-6 text-center cursor-pointer bg-surface-1 transition-colors"
+                    >
+                      <Upload size={24} className="mx-auto text-accent mb-2" />
+                      {file ? (
+                        <p className="text-xs text-good font-semibold flex items-center justify-center gap-1">
+                          <CheckCircle2 size={13} /> {file.name} ({(file.size / 1024).toFixed(1)} KB)
+                        </p>
+                      ) : (
+                        <>
+                          <p className="text-xs text-ink font-medium">Click to select JD file</p>
+                          <p className="text-[11px] text-ink-muted mt-0.5">Supports .docx and .pdf up to 10MB</p>
+                        </>
+                      )}
+                      <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept=".docx,.pdf"
+                        className="hidden"
+                        onChange={(e) => e.target.files?.[0] && setFile(e.target.files[0])}
+                      />
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex justify-end gap-2 pt-2">
+                  <Button type="button" variant="secondary" onClick={() => { setShowModal(false); setTouchedTitle(false); setTouchedText(false); }}>
+                    Cancel
+                  </Button>
+                  <Button type="submit" variant="primary" loading={creating}>
+                    Create Job Posting
+                  </Button>
+                </div>
+              </form>
+            </div>
+          </div>,
+          document.body
+        )}
     </div>
   );
 }

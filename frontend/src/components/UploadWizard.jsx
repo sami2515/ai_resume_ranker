@@ -742,7 +742,11 @@ export default function UploadWizard({ onRanked }) {
           onClick={handleRank}
           className="w-full shadow-glow text-sm font-semibold"
         >
-          {ranking ? "AI Semantic Matching in Progress..." : `Rank ${evaluatedCandidateCount} Candidates with AI`}
+          {ranking
+            ? "AI Semantic Matching in Progress..."
+            : newBatchCount > 0
+            ? `Rank ${newBatchCount} Candidate${newBatchCount === 1 ? "" : "s"} with AI`
+            : "Rank Candidates with AI"}
         </Button>
         {rankError && <p className="text-bad text-sm mt-2 text-center">{rankError}</p>}
       </section>
