@@ -298,35 +298,34 @@ export default function App() {
                 <span className="hidden xl:inline">Sign Out</span>
               </button>
 
-              {/* Glassmorphic Profile Dropdown Menu */}
+              {/* Clean Profile Dropdown Menu */}
               {profileDropdownOpen && (
-                <div className="absolute right-0 top-full mt-2 w-64 rounded-2xl bg-surface-2/95 backdrop-blur-xl border border-line shadow-2xl p-3.5 space-y-3 z-50 animate-in fade-in zoom-in-95 duration-150">
+                <div className="absolute right-0 top-full mt-2 w-60 rounded-2xl bg-surface-2/95 backdrop-blur-xl border border-line shadow-2xl p-3.5 space-y-3 z-50 animate-in fade-in zoom-in-95 duration-150">
                   {/* User Identity Header */}
                   <div className="flex items-center gap-3 pb-3 border-b border-line/70">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 border border-blue-400/40 flex items-center justify-center text-sm font-bold text-white shadow-md shrink-0">
+                    <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 border border-blue-400/30 flex items-center justify-center text-xs font-bold text-white shadow-sm shrink-0">
                       {userInitials}
                     </div>
                     <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-1.5">
-                        <p className="text-xs font-bold text-white truncate">{recruiter.full_name || "Recruiter"}</p>
-                        <span className="text-[9px] font-semibold px-1.5 py-0.2 rounded bg-accent/20 text-blue-400 border border-accent/40">
-                          HR
-                        </span>
-                      </div>
+                      <p className="text-xs font-bold text-white truncate">{recruiter.full_name || "Recruiter"}</p>
                       <p className="text-[11px] text-ink-muted truncate mt-0.5">{recruiter.email}</p>
                     </div>
                   </div>
 
-                  {/* System & Engine Status */}
+                  {/* Account Information */}
                   <div className="bg-surface-1/80 border border-line/60 rounded-xl p-2.5 space-y-1.5 text-[11px]">
                     <div className="flex items-center justify-between text-ink-muted">
-                      <span>Account Role</span>
-                      <span className="text-white font-medium">Enterprise Recruiter</span>
+                      <span>Role</span>
+                      <span className="text-white font-medium">Recruiter</span>
                     </div>
                     <div className="flex items-center justify-between text-ink-muted">
-                      <span>AI Model Engine</span>
-                      <span className="text-good font-semibold flex items-center gap-1">
-                        <span className="w-1.5 h-1.5 rounded-full bg-good inline-block" /> SBERT Active
+                      <span>Institute</span>
+                      <span className="text-white font-medium truncate max-w-[110px]">Aptech Learning</span>
+                    </div>
+                    <div className="flex items-center justify-between text-ink-muted">
+                      <span>Status</span>
+                      <span className="text-emerald-400 font-medium flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" /> Active
                       </span>
                     </div>
                   </div>
@@ -334,9 +333,9 @@ export default function App() {
                   {/* Dropdown Logout Button */}
                   <button
                     onClick={handleLogout}
-                    className="w-full flex items-center justify-center gap-2 py-2 rounded-xl bg-bad/10 hover:bg-bad/20 text-bad border border-bad/30 text-xs font-semibold transition-colors"
+                    className="w-full flex items-center justify-center gap-2 py-2 rounded-xl bg-surface-3 hover:bg-bad/15 text-ink-muted hover:text-bad border border-line hover:border-bad/30 text-xs font-semibold transition-colors"
                   >
-                    <LogOut size={14} /> Log Out of Account
+                    <LogOut size={13} /> Sign Out
                   </button>
                 </div>
               )}
@@ -497,10 +496,10 @@ export default function App() {
           <div className="flex items-center gap-2">
             <img src="/logo.png" alt="" className="w-5 h-5 object-contain opacity-60" />
             <span className="text-[11px] text-ink-faint font-medium">
-              AI ResumeRanker · Powered by SBERT + TF-IDF · TechWiz 2026
+              AI Resume Ranker · TechWiz 6 · Aptech Learning
             </span>
           </div>
-          <span className="text-[11px] text-ink-faint">Aptech Limited · All Rights Reserved</span>
+          <span className="text-[11px] text-ink-faint">Aptech Learning · All Rights Reserved</span>
         </div>
       </footer>
     </div>
