@@ -1,0 +1,13 @@
+-r requirements.txt
+pytest>=8.0
+# Per-test timeout safety net -- a hung test (e.g. a broker-connection retry
+# loop that doesn't respect its own timeout config) should fail loudly in
+# under a minute, not silently eat CI time for an hour.
+pytest-timeout>=2.3
+# fakeredis: a real Redis-protocol server in pure Python, used only for local
+# dev/testing on machines without Docker/native Redis (e.g. this Windows dev
+# box). docker-compose.yml uses the real redis:7-alpine image for actual
+# deployment -- this is a dev-only substitute, not a production dependency.
+fakeredis>=2.24
+# requests: used by scripts/load_test.py to drive the live API over real HTTP.
+requests>=2.31

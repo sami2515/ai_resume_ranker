@@ -1,0 +1,13 @@
+Marine Biologist (deliberately mismatched -- Section 8.4 "no strong matches" test case)
+
+We are seeking a Marine Biologist with 3+ years of field research
+experience studying coral reef ecosystems. Required: SCUBA certification,
+experience with underwater survey methodology, species identification,
+and marine conservation policy. A background in oceanography or
+environmental science is expected.
+
+This job description shares essentially no vocabulary or skills with the
+tech-role resume dataset (Full Stack Developer / Business Analyst / Project
+Manager / Software Engineer). Ranking against it should produce a ranked
+list where every candidate scores low ("Weak Match") and the UI must show
+a clear "no strong matches" state rather than an empty or broken screen.

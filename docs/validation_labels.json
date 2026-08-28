@@ -1,0 +1,42 @@
+{
+  "_instructions": "Ground-truth validation set created from datasets/resumes/ (19 real resumes labeled across 3 role categories per ML Engineering Plan Section 5.1).",
+  "jobs": [
+    {
+      "title": "Senior Business Analyst",
+      "jd_file": "datasets/test_jds/business_analyst.txt",
+      "relevant_candidates": [
+        "BA - Candidate_28.docx",
+        "BA - Candidate_29.docx",
+        "BA Candidate_27.docx",
+        "BA_Candidate44.docx",
+        "Business Analyst_GHyma.docx",
+        "Candidate 174 BA.docx",
+        "Candidate 177 BA Resume.docx",
+        "Candidate 21 BA Resume.docx",
+        "Candidate 30-Sr BSA-Scrum Master.docx",
+        "Candidate 62 Sr. BSA Resume.docx",
+        "Candidate10 Business Analyst.docx",
+        "Candidate103 Sr.BA.docx",
+        "Candidate104 Sr.BA.docx",
+        "Candidate105 Sr BSA Resume.docx"
+      ]
+    },
+    {
+      "title": "Full Stack Developer",
+      "jd_file": "datasets/test_jds/full_stack_developer.txt",
+      "relevant_candidates": [
+        "Candidate 114 Full Stack Java Developer.docx",
+        "Candidate 158 Java.docx",
+        "Candidate 168-NJ - Mar 2018-V3.0.docx",
+        "Candidate 92 Java Developer.docx"
+      ]
+    },
+    {
+      "title": "Project Manager",
+      "jd_file": "datasets/test_jds/project_manager.txt",
+      "relevant_candidates": [
+        "Adelina_Erimia_PMP1.docx"
+      ]
+    }
+  ]
+}

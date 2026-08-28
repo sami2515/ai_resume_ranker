@@ -1,0 +1,57 @@
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend:/app
+      - ./datasets:/datasets
+    environment:
+      - FLASK_ENV=development
+      - DATABASE_URL=postgresql://ranker:ranker@postgres:5432/ranker
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - postgres
+      - redis
+
+  worker:
+    build: ./backend
+    command: celery -A celery_app.celery_app worker --loglevel=info --concurrency=4
+    volumes:
+      - ./backend:/app
+      - ./datasets:/datasets
+    environment:
+      - DATABASE_URL=postgresql://ranker:ranker@postgres:5432/ranker
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - postgres
+      - redis
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=ranker
+      - POSTGRES_PASSWORD=ranker
+      - POSTGRES_DB=ranker
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+volumes:
+  postgres_data:

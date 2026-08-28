@@ -1,0 +1,8 @@
+{
+  "_instructions": "This is a schema stub, not a worksheet -- don't hand-fill this file directly. Generate the real, per-resume worksheet with: `python backend/scripts/build_labeling_worksheet.py --out docs/labels_person_a.json` (repeat for a second labeler into docs/labels_person_b.json). Each labeler reads body_text_preview -- NEVER the filename -- and sets 'category' to one of the six fixed taxonomy categories in backend/ml/taxonomy.py. Then run `python backend/scripts/check_labeling_agreement.py docs/labels_person_a.json docs/labels_person_b.json`, resolve every disagreement together, and save the final agreed labels here as docs/category_labels.json in the shape shown below before running backend/scripts/train_classifier.py.",
+  "entries": {
+    "EXAMPLE_FILENAME.docx": {
+      "category": "Business Analyst"
+    }
+  }
+}

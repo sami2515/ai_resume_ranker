@@ -1,0 +1,21 @@
+# Version floors, not exact pins -- lets pip pick wheels matching whatever
+# Python version each teammate has (3.11-3.13 all tested). Exact pins like
+# numpy==1.26.4 fail to build on Python 3.13 without a C compiler installed.
+flask>=3.0
+flask-cors>=4.0
+flask-sqlalchemy>=3.1
+python-docx>=1.1
+pdfplumber>=0.11
+scikit-learn>=1.5
+joblib>=1.3
+nltk>=3.9
+spacy>=3.8
+sentence-transformers>=3.1
+numpy>=1.26
+openpyxl>=3.1
+reportlab>=4.2
+PyJWT>=2.9
+bcrypt>=4.2
+cryptography>=43.0
+celery>=5.4
+redis>=5.0

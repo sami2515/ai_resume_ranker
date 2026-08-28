@@ -1,0 +1,108 @@
+{
+  "jd_title": "Business Analyst",
+  "tolerance_points": 2.0,
+  "sample_size": 10,
+  "passed": 10,
+  "pairs": [
+    {
+      "resume_filename": "Adelina_Erimia_PMP1.docx",
+      "category": "gender",
+      "name_a": "James Whitfield",
+      "name_b": "Jennifer Whitfield",
+      "score_a": 56.6,
+      "score_b": 56.6,
+      "delta": 0.0,
+      "passed": true
+    },
+    {
+      "resume_filename": "BA - Candidate_28.docx",
+      "category": "gender",
+      "name_a": "Michael Donovan",
+      "name_b": "Michelle Donovan",
+      "score_a": 63.9,
+      "score_b": 63.9,
+      "delta": 0.0,
+      "passed": true
+    },
+    {
+      "resume_filename": "BA - Candidate_29.docx",
+      "category": "gender",
+      "name_a": "Robert Chen",
+      "name_b": "Roberta Chen",
+      "score_a": 62.7,
+      "score_b": 62.7,
+      "delta": 0.0,
+      "passed": true
+    },
+    {
+      "resume_filename": "BA Candidate_27.docx",
+      "category": "gender",
+      "name_a": "David Okafor",
+      "name_b": "Diana Okafor",
+      "score_a": 64.9,
+      "score_b": 64.9,
+      "delta": 0.0,
+      "passed": true
+    },
+    {
+      "resume_filename": "BA_Candidate44.docx",
+      "category": "race_ethnicity",
+      "name_a": "Brad Baker",
+      "name_b": "Jamal Baker",
+      "score_a": 64.0,
+      "score_b": 64.0,
+      "delta": 0.0,
+      "passed": true
+    },
+    {
+      "resume_filename": "Business Analyst_GHyma.docx",
+      "category": "race_ethnicity",
+      "name_a": "Emily Walsh",
+      "name_b": "Lakisha Walsh",
+      "score_a": 62.5,
+      "score_b": 62.5,
+      "delta": 0.0,
+      "passed": true
+    },
+    {
+      "resume_filename": "Candidate 114 Full Stack Java Developer.docx",
+      "category": "race_ethnicity",
+      "name_a": "Greg Sullivan",
+      "name_b": "Darnell Sullivan",
+      "score_a": 52.0,
+      "score_b": 52.0,
+      "delta": 0.0,
+      "passed": true
+    },
+    {
+      "resume_filename": "Candidate 158 Java.docx",
+      "category": "race_ethnicity",
+      "name_a": "Allison Meyer",
+      "name_b": "Ebony Meyer",
+      "score_a": 51.2,
+      "score_b": 51.2,
+      "delta": 0.0,
+      "passed": true
+    },
+    {
+      "resume_filename": "Candidate 168-NJ - Mar 2018-V3.0.docx",
+      "category": "race_ethnicity",
+      "name_a": "Todd Pearson",
+      "name_b": "Tremayne Pearson",
+      "score_a": 59.5,
+      "score_b": 59.5,
+      "delta": 0.0,
+      "passed": true
+    },
+    {
+      "resume_filename": "Candidate 174 BA.docx",
+      "category": "race_ethnicity",
+      "name_a": "Kristen Schaefer",
+      "name_b": "Latoya Schaefer",
+      "score_a": 62.9,
+      "score_b": 62.9,
+      "delta": 0.0,
+      "passed": true
+    }
+  ]
+}

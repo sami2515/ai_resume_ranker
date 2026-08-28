@@ -1,0 +1,20 @@
+{
+  "_instructions": "Copy this file to docs/validation_labels.json and fill in relevant_candidates for each JD by hand. Section 12.1: manually label 30-40 resumes (at least 10 per role category) as relevant/not-relevant against each test JD, BEFORE tuning anything, and never touch these labels again while tuning -- only for evaluation. relevant_candidates should list the exact resume filenames (from datasets/resumes/) that a human recruiter judged genuinely relevant to that JD.",
+  "jobs": [
+    {
+      "title": "Senior Business Analyst",
+      "jd_file": "datasets/test_jds/business_analyst.txt",
+      "relevant_candidates": []
+    },
+    {
+      "title": "Full Stack Developer",
+      "jd_file": "datasets/test_jds/full_stack_developer.txt",
+      "relevant_candidates": []
+    },
+    {
+      "title": "Project Manager",
+      "jd_file": "datasets/test_jds/project_manager.txt",
+      "relevant_candidates": []
+    }
+  ]
+}

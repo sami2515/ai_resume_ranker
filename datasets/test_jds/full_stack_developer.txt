@@ -1,0 +1,8 @@
+Full Stack Developer
+
+We are hiring a Full Stack Developer with 4+ years of experience building
+production web applications. Required: strong JavaScript/TypeScript,
+React, Node.js, REST API design, and a relational database (PostgreSQL or
+MySQL). Experience with Docker, CI/CD pipelines, and cloud deployment
+(AWS or Azure) is a strong plus. Must be comfortable working in an Agile/
+Scrum team and collaborating directly with product and design.
