@@ -7,6 +7,8 @@ import {
   UserCheck,
   UserX,
   Play,
+  Pause,
+  Trash2,
   FileText,
   Upload,
   Calendar,
@@ -20,7 +22,7 @@ import Button from "./ui/Button";
 import SkillPill from "./SkillPill";
 import EmptyState from "./ui/EmptyState";
 import { useToast } from "./ui/Toast";
-import { listJobs, createJob, createJobWithFile, rankJob } from "../api";
+import { listJobs, createJob, createJobWithFile, rankJob, updateJobStatus, deleteJob } from "../api";
 
 export default function JobsView({ onSelectJob, onNavigateUpload }) {
   const toast = useToast();
@@ -119,6 +121,33 @@ export default function JobsView({ onSelectJob, onNavigateUpload }) {
       toast(err.message, "error");
     } finally {
       setRankingJobId(null);
+    }
+  };
+
+  const handleToggleStatus = async (jobId, currentStatus, title) => {
+    const nextStatus = currentStatus === "paused" ? "active" : "paused";
+    try {
+      await updateJobStatus(jobId, nextStatus);
+      toast(
+        `Position "${title}" is now ${nextStatus === "paused" ? "Paused (hiring on hold)" : "Active"}.`,
+        "success"
+      );
+      fetchJobs();
+    } catch (err) {
+      toast(err.message, "error");
+    }
+  };
+
+  const handleDeleteJob = async (jobId, title) => {
+    if (!window.confirm(`Are you sure you want to delete "${title}"? This will remove its ranking results.`)) {
+      return;
+    }
+    try {
+      await deleteJob(jobId);
+      toast(`Job "${title}" deleted successfully.`, "success");
+      fetchJobs();
+    } catch (err) {
+      toast(err.message, "error");
     }
   };
 
@@ -224,10 +253,19 @@ export default function JobsView({ onSelectJob, onNavigateUpload }) {
                 <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className="text-base font-display font-bold text-ink truncate">{job.title}</h3>
+                      <h3 className={`text-base font-display font-bold truncate ${job.status === "paused" ? "text-ink-muted line-through" : "text-ink"}`}>{job.title}</h3>
                       <span className="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-accent/15 text-accent border border-accent/30">
                         {job.category || "General"}
                       </span>
+                      {job.status === "paused" ? (
+                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/30 flex items-center gap-1">
+                          ⏸️ Paused
+                        </span>
+                      ) : (
+                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center gap-1">
+                          🟢 Active
+                        </span>
+                      )}
                     </div>
 
                     <div className="flex items-center gap-3 text-xs text-ink-muted mt-1.5 flex-wrap">
@@ -286,7 +324,29 @@ export default function JobsView({ onSelectJob, onNavigateUpload }) {
                     </span>
                   </div>
 
-                  <div className="flex items-center gap-2 self-end sm:self-auto">
+                  <div className="flex items-center gap-1.5 self-end sm:self-auto flex-wrap">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      icon={job.status === "paused" ? Play : Pause}
+                      onClick={() => handleToggleStatus(job.id, job.status, job.title)}
+                      className={job.status === "paused" ? "text-emerald-400 hover:bg-emerald-500/10" : "text-amber-400 hover:bg-amber-500/10"}
+                      title={job.status === "paused" ? "Resume Job (Allow new applicants)" : "Pause Job (Temporarily hold hiring)"}
+                    >
+                      {job.status === "paused" ? "Resume" : "Pause"}
+                    </Button>
+
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      icon={Trash2}
+                      onClick={() => handleDeleteJob(job.id, job.title)}
+                      className="text-bad/80 hover:bg-bad/10 hover:text-bad"
+                      title="Delete Job and its ranking results"
+                    >
+                      Delete
+                    </Button>
+
                     <Button
                       variant="secondary"
                       size="sm"

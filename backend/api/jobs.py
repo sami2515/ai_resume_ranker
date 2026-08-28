@@ -69,11 +69,10 @@ def create_job():
 @jobs_bp.get("")
 @require_auth
 def list_jobs():
-    jobs = (
-        JobDescriptionModel.query.filter_by(created_by_recruiter_id=g.recruiter_id)
-        .order_by(JobDescriptionModel.created_at.desc())
-        .all()
-    )
+    query = JobDescriptionModel.query.filter_by(created_by_recruiter_id=g.recruiter_id)
+    if request.args.get("active_only", "").lower() in ("true", "1"):
+        query = query.filter_by(status="active")
+    jobs = query.order_by(JobDescriptionModel.created_at.desc()).all()
     shortlist_threshold = current_app.config.get("SHORTLIST_THRESHOLD", 80.0)
 
     out = []
@@ -105,6 +104,32 @@ def list_jobs():
         out.append(d)
 
     return jsonify(jobs=out)
+
+
+@jobs_bp.patch("/<int:job_id>/status")
+@require_auth
+def update_status(job_id: int):
+    jd, error = _get_owned_job(job_id)
+    if error:
+        return error
+    body = request.get_json(silent=True) or {}
+    new_status = (body.get("status") or "").strip().lower()
+    if new_status not in ("active", "paused", "closed"):
+        return jsonify(error="Status must be one of: active, paused, closed"), 400
+    jd.status = new_status
+    db.session.commit()
+    return jsonify(jd.to_dict()), 200
+
+
+@jobs_bp.delete("/<int:job_id>")
+@require_auth
+def delete_job(job_id: int):
+    jd, error = _get_owned_job(job_id)
+    if error:
+        return error
+    from services import delete_job_description
+    delete_job_description(job_id)
+    return jsonify(message=f"Job {job_id} deleted successfully."), 200
 
 
 @jobs_bp.post("/<int:job_id>/rank")

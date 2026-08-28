@@ -111,8 +111,25 @@ export async function createJobWithFile({ title, file }) {
   return asJson(resp);
 }
 
-export async function listJobs() {
-  const resp = await authedFetch("/jobs");
+export async function listJobs(activeOnly = false) {
+  const qs = activeOnly ? "?active_only=true" : "";
+  const resp = await authedFetch(`/jobs${qs}`);
+  return asJson(resp);
+}
+
+export async function updateJobStatus(jobId, status) {
+  const resp = await authedFetch(`/jobs/${jobId}/status`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ status }),
+  });
+  return asJson(resp);
+}
+
+export async function deleteJob(jobId) {
+  const resp = await authedFetch(`/jobs/${jobId}`, {
+    method: "DELETE",
+  });
   return asJson(resp);
 }
 

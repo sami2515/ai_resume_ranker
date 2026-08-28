@@ -142,7 +142,10 @@ export default function UploadWizard({ onRanked }) {
       .then((res) => {
         const jobs = res.jobs || [];
         setExistingJobs(jobs);
-        if (jobs.length > 0) {
+        const activeJobs = jobs.filter((j) => j.status !== "paused");
+        if (activeJobs.length > 0) {
+          setSelectedExistingJobId(String(activeJobs[0].id));
+        } else if (jobs.length > 0) {
           setSelectedExistingJobId(String(jobs[0].id));
         }
       })
@@ -558,8 +561,8 @@ export default function UploadWizard({ onRanked }) {
                 className="w-full px-3.5 py-2.5 rounded-xl bg-surface-1 border border-line text-white text-sm focus:outline-none focus:border-accent"
               >
                 {existingJobs.map((j) => (
-                  <option key={j.id} value={j.id}>
-                    {j.title} ({j.category || "General"})
+                  <option key={j.id} value={j.id} disabled={j.status === "paused"}>
+                    {j.title} ({j.category || "General"}) {j.status === "paused" ? "— [PAUSED]" : ""}
                   </option>
                 ))}
               </select>

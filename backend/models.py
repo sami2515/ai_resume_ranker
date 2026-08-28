@@ -127,20 +127,16 @@ class JobDescriptionModel(db.Model):
     raw_text = db.Column(db.Text, nullable=False)
     required_skills = db.Column(db.JSON, default=list)
     min_experience = db.Column(db.Float, default=0.0)
-    # Role category (Section 5.4: the feedback loop re-weights "per job
-    # category") -- inferred from the title at creation time, see
-    # services.py:infer_job_category().
     category = db.Column(db.String(100), nullable=False, default="General", index=True)
-    # Access control (Section 8.2 Security Testing: "verify access control
-    # between recruiter accounts") -- a JD belongs to the recruiter who
-    # created it; only they can rank/view results/export it.
     created_by_recruiter_id = db.Column(db.Integer, db.ForeignKey("recruiter.id"), nullable=False)
+    status = db.Column(db.String(32), default="active", nullable=False)
     created_at = db.Column(db.DateTime, default=_utcnow)
 
     def to_dict(self) -> dict:
         return {
             "id": self.id,
             "title": self.title,
+            "status": self.status or "active",
             "category": self.category,
             "required_skills": self.required_skills or [],
             "min_experience": self.min_experience,

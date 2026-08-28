@@ -161,10 +161,34 @@ def create_job_description(title: str, raw_text: str, created_by_recruiter_id: i
         min_experience=parsed.min_experience,
         category=infer_job_category(parsed.title),
         created_by_recruiter_id=created_by_recruiter_id,
+        status="active",
     )
     db.session.add(jd)
     db.session.commit()
     return jd
+
+
+def update_job_status(jd_id: int, status: str) -> JobDescriptionModel | None:
+    jd = db.session.get(JobDescriptionModel, jd_id)
+    if not jd:
+        return None
+    jd.status = status
+    db.session.commit()
+    return jd
+
+
+def delete_job_description(jd_id: int) -> bool:
+    jd = db.session.get(JobDescriptionModel, jd_id)
+    if not jd:
+        return False
+    matches = MatchResultModel.query.filter_by(jd_id=jd_id).all()
+    match_ids = [m.id for m in matches]
+    if match_ids:
+        RecruiterFeedback.query.filter(RecruiterFeedback.match_result_id.in_(match_ids)).delete(synchronize_session=False)
+        MatchResultModel.query.filter_by(jd_id=jd_id).delete(synchronize_session=False)
+    db.session.delete(jd)
+    db.session.commit()
+    return True
 
 
 def get_active_weights(category: str) -> tuple[float, float]:
